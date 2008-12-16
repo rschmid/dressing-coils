@@ -76,3 +76,12 @@ int BCoil::is_closed() {
   }
   return 0;
 }
+
+BCoil *BCoil::get_first() {
+  BCoil *prev_most = this;
+  while (prev_most->prev) {
+    prev_most = prev_most->prev;
+    if (prev_most == this) return this;
+  }
+  return prev_most;
+}

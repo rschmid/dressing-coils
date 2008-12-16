@@ -12,7 +12,8 @@ class BCoil : public BSegment{
   float *field(float *r);
   float *field(float x, float y, float z);
   int is_closed();
-
+  BCoil *get_first();
+  // Members
   BCoil *prev;
   BCoil *next;
 };
