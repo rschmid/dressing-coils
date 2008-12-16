@@ -1,8 +1,6 @@
 #ifndef __VECTOR_H
 #define __VECTOR_H
 
-#include "TROOT.h"
-
 #define PI 3.141592653589793238462643383
 
 #include <iostream.h>
@@ -14,17 +12,28 @@ class Vector {
   Vector() {};
 
 
-static Double_t *Add(Double_t *A, Double_t *B, Double_t *C) {
-
+static float *Add(float *A, float *B, float *C) {
   C[0] = A[0] + B[0];
   C[1] = A[1] + B[1];
   C[2] = A[2] + B[2];
-
   return C;
+}
 
+static float *Sub(float *A, float *B, float *C) {
+  C[0] = A[0] - B[0];
+  C[1] = A[1] - B[1];
+  C[2] = A[2] - B[2];
+  return C;
 }
  
-static Double_t DotProduct(Double_t *A, Double_t *B) {
+static void Scale(float *A, float mult, float *out = 0) {
+  if (!out) out = A;
+  out[0] = A[0] * mult;
+  out[1] = A[1] * mult;
+  out[2] = A[2] * mult;  
+}
+
+static float DotProduct(float *A, float *B) {
 
   if (A && B) {
     return A[0]*B[0] + A[1]*B[1] + A[2]*B[2];
@@ -34,9 +43,9 @@ static Double_t DotProduct(Double_t *A, Double_t *B) {
 
 }
 
-static Double_t *CrossProduct(Double_t *A, Double_t *B, Double_t *C) {
+static float *CrossProduct(float *A, float *B, float *C) {
  
-  Double_t temp[3];
+  float temp[3];
   
 
   if (A && B && C) {
@@ -55,71 +64,68 @@ static Double_t *CrossProduct(Double_t *A, Double_t *B, Double_t *C) {
 
 }
 
-static Double_t *CrossProduct(Double_t *A, Double_t *B) {
+static float *CrossProduct(float *A, float *B) {
 
-  Double_t *C = 0;
+  float *C = 0;
 
   if (A && B) 
-    C = new Double_t[3];
+    C = new float[3];
   
   return CrossProduct(A,B,C);
 
 }
 
- static Double_t Norm(Double_t *A) {
+ static float Norm(float *A) {
 
    return sqrt(A[0]*A[0] + A[1]*A[1] + A[2]*A[2]);
 
  } 
 
- static Double_t Norm2(Double_t *A) {
+ static float Norm2(float *A) {
 
    return A[0]*A[0] + A[1]*A[1] + A[2]*A[2];
 
  } 
 
 
- static Double_t Normalize(Double_t *A, Double_t *out) {
-
-   Double_t temp;
-
+ static float Normalize(float *A, float *out) {
+   float temp;
    if (!A)
      return -1.0;
-
    temp = sqrt(A[0]*A[0] + A[1]*A[1] + A[2]*A[2]);
-
    out[0] = A[0] / temp;
    out[1] = A[1] / temp;
    out[2] = A[2] / temp;
-   
    return temp;
  }  
 
- static Double_t Normalize(Double_t *A) {
-   
+ static float Normalize(float *A) {
    return Normalize(A, A);
-
  }
 
- static Double_t Normalize(Double_t *A, Double_t mag) {
-   
-   Double_t temp;
-
+ static float Normalize(float *A, float mag) {
+   float temp;
    temp = Normalize(A, A);
-   
    A[0] *= mag;
    A[1] *= mag;
    A[2] *= mag;
-
    return temp;
-
  }
 
- static Double_t Theta(Double_t *A, Double_t *B) {
+ static float Normalize(float *A, float *out, float mag) {
+   float temp;
+   temp = Normalize(A, out);
+   out[0] *= mag;
+   out[1] *= mag;
+   out[2] *= mag;
+   return temp;
+ }
 
-   Double_t c;
+ static float Theta(float *A, float *B) {
+
+   float c;
    
-   Double_t temp[3];
+   float temp[3];
 
    c = DotProduct(A, B);
    c /= Norm(A);
@@ -135,7 +141,7 @@ static Double_t *CrossProduct(Double_t *A, Double_t *B) {
 
  }
 
- static void Print(Double_t *v) {
+ static void Print(float *v) {
 
    cout << "{" << v[0]
 	<< ", " << v[1]
