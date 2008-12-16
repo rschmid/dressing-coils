@@ -26,7 +26,7 @@ default: test
 
 PROGRAMS	= test
 
-TESTO	= Reading.o test.o
+TESTO	= test.o
 
 RUNO = Neutron.o Boundary.o Bfield.o Reading.o Scattering.o Run.o runDict.o
 RUNH = Neutron.h Boundary.h Bfield.h Vector.h Scattering.h Run.h
