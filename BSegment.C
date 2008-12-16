@@ -37,8 +37,16 @@ BSegment *BSegment::Clone() {
   return clone;
 }
 
+int BSegment::init() {
+  initialized = 0;
+  if (p1 && p2) {
+    initialized = 1;
+  }
+  return initialized;
+}
+
 int BSegment::is_valid() {
-  return (p1 && p2);
+  return (initialized && p1 && p2);
 }
 
 float *BSegment::field(float x, float y, float z) {
