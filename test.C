@@ -1,20 +1,25 @@
-#include "BSegment.h"
+#include "BCoil.h"
 
 //#include <stdlib.h>
 #include <iostream.h>
 
 int main (int argc, char **argv) {
   cout << "ok\n";
-  BSegment *seg = new BSegment();
-  float *temp = seg->field(1,2,3);
-  cout << temp[0] << "\t"
-       << temp[1] << "\t"
-       << temp[2] << "\n";
-  if (seg->is_valid()) {
-    cout << "valid\n";
+  BCoil *seg = new BCoil();
+  float *field;
+  seg->AddNextPoint(0, 0, 0);
+  seg->AddNextPoint(1, 0, 0);
+  seg->AddNextPoint(1, 1, 0);
+  seg->AddNextPoint(0, 1, 0);
+  seg->AddNextPoint(0, 0, 0);
+
+  field = seg->field(-1,-1,-1);
+  if (field) {
+    cout << "field @ (0,0,0) = {" << field[0]
+	 << ", " << field[1] << ", " << field[2] << "}\n";
   }
   else {
-    cout << "not valid\n";
+    cout << "valid = " << seg->is_valid() << endl;
   }
   return 0;
 }
