@@ -18,6 +18,7 @@ class BSegment {
   int initialized;
   static float _temp_field[3];
   float current_direction[3];
+  float length;
   void _default_constructor();
 };
 
