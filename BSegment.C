@@ -39,6 +39,9 @@ BSegment *BSegment::Clone() {
   return clone;
 }
 
+/*
+ * Initialize the values
+ */
 int BSegment::init() {
   initialized = 0;
   if (p1 && p2) {
@@ -48,6 +51,9 @@ int BSegment::init() {
     length = Vector::Norm(current_direction);
     Vector::Normalize(current_direction);
     initialized = 1;
+  }
+  else {
+    cout << "!p1 || !p2" << endl;
   }
   return initialized;
 }
@@ -62,15 +68,20 @@ int BSegment::is_valid() {
   return initialized;
 }
 
+
 float *BSegment::field(float x, float y, float z) {
-  if (!is_valid()) {
-    return 0;
-  }
   // the point
   float r[3];
   r[0] = x;
   r[1] = y;
   r[2] = z;
+  return field(r);
+}
+
+float *BSegment::field(float *r) {
+  if (!is_valid() || !r) {
+    return 0;
+  }
   // distances from the point
   float d1[3]; float d2[3];
   Vector::Sub(p1, r, d1);

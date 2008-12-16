@@ -5,16 +5,17 @@ class BSegment {
  public:
   BSegment();
   BSegment(BSegment *clone);
-  ~BSegment();
+  virtual ~BSegment();
   BSegment *Clone();
   int init();
   int is_valid();
-  float *field(float x, float y, float z);
+  virtual float *field(float x, float y, float z);
+  virtual float *field(float *r);
 
   // Members
   float *p1;
   float *p2;
- private:
+ protected:
   int initialized;
   static float _temp_field[3];
   float current_direction[3];
