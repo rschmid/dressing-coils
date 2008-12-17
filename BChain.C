@@ -1,16 +1,16 @@
-#include "BCoil.h"
+#include "BChain.h"
 
 #include "Vector.h"
 
-BCoil::BCoil() {
+BChain::BChain() {
   prev = next = 0;
 }
 
-int BCoil::AddNextPoint(const float *p) {
+int BChain::AddNextPoint(const float *p) {
   return AddNextPoint(p[0], p[1], p[2]);
 }
 
-int BCoil::AddNextPoint(float x, float y, float z) {
+int BChain::AddNextPoint(float x, float y, float z) {
   if (!p1) {
     p1 = new float(3);
     p1[0] = x; p1[1] = y; p1[2] = z;
@@ -22,7 +22,7 @@ int BCoil::AddNextPoint(float x, float y, float z) {
     return 1;
   }
   if (!next) {
-    next = new BCoil();
+    next = new BChain();
     next->prev = this;
     next->p1 = p2;
     next->p2 = new float(3);
@@ -31,7 +31,7 @@ int BCoil::AddNextPoint(float x, float y, float z) {
     next->p2[2] = z;
     return 1;
   }
-  BCoil *next_most = this;
+  BChain *next_most = this;
   while (next_most->next) {
     next_most = next_most->next;
     if (next_most == this) return 0; // Loop is closed
@@ -40,7 +40,7 @@ int BCoil::AddNextPoint(float x, float y, float z) {
 }
 
 
-float *BCoil::field(float x, float y, float z) {
+float *BChain::field(float x, float y, float z) {
   float r[3];
   r[0] = x;
   r[1] = y;
@@ -48,9 +48,9 @@ float *BCoil::field(float x, float y, float z) {
   return field(r);
 }
 
-float *BCoil::field(float *r) {
+float *BChain::field(float *r) {
   float temp[] = {0., 0., 0.};
-  BCoil *prev_most = this, *next_most = this;
+  BChain *prev_most = this, *next_most = this;
   this->BSegment::field(r);
   Vector::Add(temp, _temp_field, temp);
   while (next_most->next && next_most->next != prev_most) {
@@ -69,19 +69,28 @@ float *BCoil::field(float *r) {
   return _temp_field;
 }
 
-int BCoil::is_closed() {
-  BCoil *next_most = this;
+int BChain::is_closed() {
+  BChain *next_most = this;
   while (next_most = next_most->next) {
     if (next_most == this) return 1;
   }
   return 0;
 }
 
-BCoil *BCoil::get_first() {
-  BCoil *prev_most = this;
+BChain *BChain::get_first() {
+  BChain *prev_most = this;
   while (prev_most->prev) {
     prev_most = prev_most->prev;
     if (prev_most == this) return this;
   }
   return prev_most;
+}
+
+BChain *BChain::get_last() {
+  BChain *next_most = this;
+  while (next_most->next) {
+    next_most = next_most->next;
+    if (next_most == this) return this;
+  }
+  return next_most;
 }

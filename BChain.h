@@ -1,21 +1,27 @@
-#ifndef __BCOIL_H
-#define __BCOIL_H
+#ifndef __BCHAIN_H
+#define __BCHAIN_H
 
 #include "BSegment.h"
 
-class BCoil : public BSegment{
+struct _BChain {
+  BSegment *link;
+  _BChain *next;
+};
 
- public:
-  BCoil();
+class BChain : public BSegment{
+  public:
+  BChain();
   int AddNextPoint(const float *p);
   int AddNextPoint(float x, float y, float z);
   float *field(float *r);
   float *field(float x, float y, float z);
+  int is_valid();
   int is_closed();
-  BCoil *get_first();
+  BChain *get_first();
   // Members
-  BCoil *prev;
-  BCoil *next;
+  BChain *first;
+  BChain *last;
+
 };
 
 #endif
