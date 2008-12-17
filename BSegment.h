@@ -2,7 +2,7 @@
 #define __BSEGMENT_H
 
 class BSegment {
- public:
+public:
   BSegment();
   virtual ~BSegment();
   virtual int init(); // use when changed
@@ -10,11 +10,12 @@ class BSegment {
   virtual const float *field(const float *r);
   virtual const float *field(float x, float y, float z);
 
+  virtual float get_length();
   // Members
   float *p1;
   float *p2;
   
- protected:
+protected:
   static float _temp_field[3]; // store latest field
 
   int initialized;

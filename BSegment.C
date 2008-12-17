@@ -103,3 +103,10 @@ const float *BSegment::field(float x, float y, float z) {
   r[2] = z;
   return field(r);
 }
+
+virtual float BSegment::get_length() {
+  if (!initialized && !init()) {
+    return -1.0;
+  }
+  return length;
+}
