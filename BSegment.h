@@ -4,22 +4,23 @@
 class BSegment {
  public:
   BSegment();
-  BSegment(BSegment *clone);
   virtual ~BSegment();
-  BSegment *Clone();
-  int init();
-  int is_valid();
-  virtual float *field(float x, float y, float z);
-  virtual float *field(float *r);
+  virtual int init(); // use when changed
+  virtual int is_valid();
+  virtual const float *field(const float *r);
+  virtual const float *field(float x, float y, float z);
 
   // Members
   float *p1;
   float *p2;
+  
  protected:
+  static float _temp_field[3]; // store latest field
+
   int initialized;
-  static float _temp_field[3];
   float current_direction[3];
   float length;
+
   void _default_constructor();
 };
 
