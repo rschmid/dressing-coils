@@ -14,6 +14,8 @@ int main (int argc, char **argv) {
   float *field = 0;
   cin >> input;
   cin.clear();
+  if (chain->is_closed()) cout << "Closed circuit" << endl;
+  else cout << "Circuit is not closed" << endl;
   cout << "ok. Now enter points where you want the field" << endl;
   while (cin >> temp_coords[0] >> temp_coords[1] >> temp_coords[2]) {
     field = chain->field(temp_coords[0],temp_coords[1],temp_coords[2]);

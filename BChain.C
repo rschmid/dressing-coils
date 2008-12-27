@@ -99,10 +99,12 @@ float *BChain::field(float *r) {
 
 int BChain::is_closed() {
   _BChain *current = first;
+  if (!current) return 0;
   while (current->next) {
     current = current->next;
     if (current == first) return 1;
   }
-  return 0;
+  // if not closed by definition, could still be closed
+  return (p1[0] == p2[0] && p1[1] == p2[1] && p1[2] == p2[2]);
 }
 
