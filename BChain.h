@@ -13,9 +13,10 @@ public:
   BChain();
   ~BChain();
   // overloaded methods
+  virtual int init();
   virtual int is_valid();
-  float *field(float *r);
-  float *field(float x, float y, float z);
+  virtual float *field(float *r);
+  virtual float *field(float x, float y, float z);
 
   int is_closed();
   // Members

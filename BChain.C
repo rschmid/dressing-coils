@@ -10,6 +10,22 @@ BChain::~BChain() {
   first = last = 0;
 }
 
+int BChain::init() {
+  if (p1 && p2) {
+    if (!first || !last) {
+      first = new _BChain;
+      BSegment *temp = new BSegment;
+      temp->p1 = p1;
+      temp->p2 = p2;
+      temp->init();
+      first->link = temp;
+      first->next = 0;
+      last = first;
+    }
+    return 1;
+  }
+  return 0;
+}
 
 int BChain::is_valid() {
   if (!first || !last || !p1 || !p2 ||
@@ -32,26 +48,27 @@ int BChain::AddNextPoint(float x, float y, float z) {
   if (!p2) {
     p2 = new float(3);
     p2[0] = x; p2[1] = y; p2[2] = z;
-    return 1;
+    return init();
   }
-  /*
-  if (!next) {
-    next = new BChain();
-    next->prev = this;
-    next->p1 = p2;
-    next->p2 = new float(3);
-    next->p2[0] = x;
-    next->p2[1] = y;
-    next->p2[2] = z;
-    return 1;
-    }*/
-  BChain *next_most = this;
-  /*
-  while (next_most->next) {
-    next_most = next_most->next;
-    if (next_most == this) return 0; // Loop is closed
-    }*/
-  return next_most->AddNextPoint(x,y,z);
+  if ((!first || !last) && !init()) {
+    return 0;
+  }
+  // create a new segment
+  BSegment *temp = new BSegment();
+  temp->p1 = last->link->p2;
+  temp->p2 = new float(3);
+  temp->p2[0] = x;
+  temp->p2[1] = y;
+  temp->p2[2] = z;
+  temp->init();
+  // add it to the chain as the last link
+  _BChain *current = new _BChain;
+  current->next = 0;
+  current->link = temp;
+  last->next = current;
+  last = current;
+  p2 = temp->p2;
+  return 1;
 }
 
 
