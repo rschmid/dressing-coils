@@ -7,8 +7,8 @@ public:
   virtual ~BSegment();
   virtual int init(); // use when changed
   virtual int is_valid();
-  virtual const float *field(const float *r);
-  virtual const float *field(float x, float y, float z);
+  virtual float *field(float *r);
+  virtual float *field(float x, float y, float z);
 
   virtual float get_length();
   // Members

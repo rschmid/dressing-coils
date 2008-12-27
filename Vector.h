@@ -3,7 +3,8 @@
 
 #define PI 3.141592653589793238462643383
 
-#include <iostream.h>
+#include <iostream>
+using namespace std;
 #include <math.h>
 
 class Vector {

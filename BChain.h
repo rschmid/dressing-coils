@@ -8,19 +8,22 @@ struct _BChain {
   _BChain *next;
 };
 
-class BChain : public BSegment{
-  public:
+class BChain : public BSegment {
+public:
   BChain();
-  int AddNextPoint(const float *p);
-  int AddNextPoint(float x, float y, float z);
+  ~BChain();
+  // overloaded methods
+  virtual int is_valid();
   float *field(float *r);
   float *field(float x, float y, float z);
-  int is_valid();
+
   int is_closed();
-  BChain *get_first();
   // Members
-  BChain *first;
-  BChain *last;
+  _BChain *first;
+  _BChain *last;
+
+  int AddNextPoint(float *p);
+  int AddNextPoint(float x, float y, float z);
 
 };
 

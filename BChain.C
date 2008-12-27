@@ -3,10 +3,23 @@
 #include "Vector.h"
 
 BChain::BChain() {
-  prev = next = 0;
+  first = last = 0;
 }
 
-int BChain::AddNextPoint(const float *p) {
+BChain::~BChain() {
+  first = last = 0;
+}
+
+
+int BChain::is_valid() {
+  if (!first || !last || !p1 || !p2 ||
+      first->link->p1 != p1 || last->link->p2 != p2) {
+    return 0;
+  }
+  return 1;
+}
+
+int BChain::AddNextPoint(float *p) {
   return AddNextPoint(p[0], p[1], p[2]);
 }
 
@@ -21,6 +34,7 @@ int BChain::AddNextPoint(float x, float y, float z) {
     p2[0] = x; p2[1] = y; p2[2] = z;
     return 1;
   }
+  /*
   if (!next) {
     next = new BChain();
     next->prev = this;
@@ -30,12 +44,13 @@ int BChain::AddNextPoint(float x, float y, float z) {
     next->p2[1] = y;
     next->p2[2] = z;
     return 1;
-  }
+    }*/
   BChain *next_most = this;
+  /*
   while (next_most->next) {
     next_most = next_most->next;
     if (next_most == this) return 0; // Loop is closed
-  }
+    }*/
   return next_most->AddNextPoint(x,y,z);
 }
 
@@ -50,17 +65,13 @@ float *BChain::field(float x, float y, float z) {
 
 float *BChain::field(float *r) {
   float temp[] = {0., 0., 0.};
-  BChain *prev_most = this, *next_most = this;
-  this->BSegment::field(r);
+  _BChain *current = first;
+  current->link->field(r);
   Vector::Add(temp, _temp_field, temp);
-  while (next_most->next && next_most->next != prev_most) {
-    next_most = next_most->next;
-    next_most->BSegment::field(r);
-    Vector::Add(temp, _temp_field, temp);
-  }
-  while (prev_most->prev && prev_most->prev != next_most) {
-    prev_most = prev_most->prev;
-    prev_most->BSegment::field(r);
+  while (current->next) {
+    current = current->next;
+    if (current == first) break;
+    current->link->field(r);
     Vector::Add(temp, _temp_field, temp);
   }
   _temp_field[0] = temp[0];
@@ -70,27 +81,11 @@ float *BChain::field(float *r) {
 }
 
 int BChain::is_closed() {
-  BChain *next_most = this;
-  while (next_most = next_most->next) {
-    if (next_most == this) return 1;
+  _BChain *current = first;
+  while (current->next) {
+    current = current->next;
+    if (current == first) return 1;
   }
   return 0;
 }
 
-BChain *BChain::get_first() {
-  BChain *prev_most = this;
-  while (prev_most->prev) {
-    prev_most = prev_most->prev;
-    if (prev_most == this) return this;
-  }
-  return prev_most;
-}
-
-BChain *BChain::get_last() {
-  BChain *next_most = this;
-  while (next_most->next) {
-    next_most = next_most->next;
-    if (next_most == this) return this;
-  }
-  return next_most;
-}

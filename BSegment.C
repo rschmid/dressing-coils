@@ -7,22 +7,6 @@ BSegment::BSegment() {
   _default_constructor();
 }
 
-BSegment::BSegment(BSegment *clone) {
-  _default_constructor();
-  if (clone->p1) {
-    p1 = new float(3);
-    p1[0] = clone->p1[0];
-    p1[1] = clone->p1[1];
-    p1[2] = clone->p1[2];
-  }
-  if (clone->p2) {
-    p2 = new float(3);
-    p2[0] = clone->p2[0];
-    p2[1] = clone->p2[1];
-    p2[2] = clone->p2[2];
-  }
-}
-
 BSegment::~BSegment() {
   delete p1;
   delete p2;
@@ -66,10 +50,10 @@ int BSegment::is_valid() {
 
 /**
  * Calculates the B field due to this segment at point r (x,y,z)
- * @param const float *r : position vector float[3];
- * @return const float * : Field vector float[3] (static variable)
+ * @param float *r : position vector float[3];
+ * @return float * : Field vector float[3] (static variable)
  */
-const float *BSegment::field(const float *r) {
+float *BSegment::field(float *r) {
   if (!is_valid() || !r) {
     return 0;
   }
@@ -95,7 +79,7 @@ const float *BSegment::field(const float *r) {
   return _temp_field;
 }
 
-const float *BSegment::field(float x, float y, float z) {
+float *BSegment::field(float x, float y, float z) {
   // the point
   float r[3];
   r[0] = x;
@@ -104,7 +88,7 @@ const float *BSegment::field(float x, float y, float z) {
   return field(r);
 }
 
-virtual float BSegment::get_length() {
+float BSegment::get_length() {
   if (!initialized && !init()) {
     return -1.0;
   }
