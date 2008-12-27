@@ -11,23 +11,16 @@ int main (int argc, char **argv) {
   while (cin >> temp_coords[0] >> temp_coords[1] >> temp_coords[2]) {
     chain->AddNextPoint(temp_coords);
   }
-  cout << "ok: " << input << endl;
-  float *field;
-  /*
-  seg->AddNextPoint(0, 0, 0);
-  seg->AddNextPoint(1, 0, 0);
-  seg->AddNextPoint(1, 1, 0);
-  seg->AddNextPoint(0, 1, 0);
-  seg->AddNextPoint(0, 0, 0);
-  */
-
-  field = (float *)chain->field(-1,-1,-1);
-  if (field) {
-    cout << "field @ (0,0,0) = {" << field[0]
+  float *field = 0;
+  cin >> input;
+  cin.clear();
+  cout << "ok. Now enter points where you want the field" << endl;
+  while (cin >> temp_coords[0] >> temp_coords[1] >> temp_coords[2]) {
+    field = chain->field(temp_coords[0],temp_coords[1],temp_coords[2]);
+    cout << "field @ (" << temp_coords[0] << ", "
+	 << temp_coords[1] << ", " << temp_coords[2]
+	 << ") = {" << field[0]
 	 << ", " << field[1] << ", " << field[2] << "}\n";
-  }
-  else {
-    cout << "valid = " << chain->is_valid() << endl;
   }
   return 0;
 }

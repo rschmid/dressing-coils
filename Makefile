@@ -19,14 +19,15 @@ CXXFLAGS      = -O2 -Wall -fPIC -I$(ROOTSYS)/include -I~/src/include/spirit
 LD            = g++
 LDFLAGS       = -g
 SOFLAGS       = -Wl,-soname,libEvent.so -shared
-LIBS          = $(ROOTLIBS) $(SYSLIBS)
+# LIBS          = $(ROOTLIBS) $(SYSLIBS)
+LIBS          = $(SYSLIBS)
 GLIBS         = $(ROOTLIBS) $(ROOTGLIBS) $(SYSLIBS)
 
 default: test
 
 PROGRAMS	= test
 
-TESTO	= BCylinder.o BCoil.o BSegment.o test.o
+TESTO	= BChain.o BSegment.o test.o
 
 RUNO = Neutron.o Boundary.o Bfield.o Reading.o Scattering.o Run.o runDict.o
 RUNH = Neutron.h Boundary.h Bfield.h Vector.h Scattering.h Run.h
