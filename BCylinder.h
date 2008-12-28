@@ -10,7 +10,10 @@ class BCylinder : public BChain {
   float *field_polar(float radius, float phi, float z);
 
   // Members:
+  float last_phi;
+  float last_z;
   float radius;
+  float max_phi_step;
 };
 
 #endif
