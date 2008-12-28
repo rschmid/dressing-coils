@@ -11,7 +11,7 @@ struct _BChain {
 class BChain : public BSegment {
 public:
   BChain();
-  ~BChain();
+  virtual ~BChain();
   // overloaded methods
   virtual int init();
   virtual int is_valid();
