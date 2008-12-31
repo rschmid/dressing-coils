@@ -26,7 +26,13 @@ int BCylinder::AddNextPoint(float phi, float z) {
   return points;
 }
 
+int BCylinder::AddNextPoint(float *coords) {
+  if (coords) {
+    return AddNextPoint(coords[0], coords[1]);
+  }
+  return -1;
+}
+
 float *BCylinder::field_polar(float radius, float phi, float z) {
   return BChain::field(radius * cos(phi), radius * sin(phi), z);
 }
-

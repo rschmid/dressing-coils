@@ -7,6 +7,7 @@ class BCylinder : public BChain {
  public:
   BCylinder(float radius);
   int AddNextPoint(float phi, float z);
+  int AddNextPoint(float *coords);
   float *field_polar(float radius, float phi, float z);
 
   // Members:
