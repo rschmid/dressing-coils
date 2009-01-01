@@ -6,6 +6,7 @@
 struct _BChain {
   BSegment *link;
   _BChain *next;
+  _BChain *prev;
 };
 
 class BChain : public BSegment {

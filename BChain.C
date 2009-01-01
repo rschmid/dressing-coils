@@ -20,6 +20,7 @@ int BChain::init() {
       temp->init();
       first->link = temp;
       first->next = 0;
+      first->prev = 0;
       last = first;
     }
     return 1;
@@ -64,6 +65,7 @@ int BChain::AddNextPoint(float x, float y, float z) {
   // add it to the chain as the last link
   _BChain *current = new _BChain;
   current->next = 0;
+  current->prev = last;
   current->link = temp;
   last->next = current;
   last = current;
