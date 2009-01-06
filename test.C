@@ -62,10 +62,14 @@ BCylinder *copy_to_bottom_y(BCylinder *coil) {
   _BChain *current;
   float temp_point[3];
   current = coil->first;
+  temp_point[0] = current->link->p1[0];
+  temp_point[1] = -current->link->p1[1];
+  temp_point[2] = current->link->p1[2];
+  copy->BChain::AddNextPoint(temp_point);
   do {
-    temp_point[0] = current->link->p1[0];
-    temp_point[1] = -current->link->p1[1];
-    temp_point[2] = current->link->p1[2];
+    temp_point[0] = current->link->p2[0];
+    temp_point[1] = -current->link->p2[1];
+    temp_point[2] = current->link->p2[2];
     copy->BChain::AddNextPoint(temp_point);
   } while ((current = current->next));
   cout << "Copied coil to bottom y" << endl;
