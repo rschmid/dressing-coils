@@ -141,7 +141,7 @@ int cell_calculations(int set = 0) {
 }
 
 int main (int argc, char **argv) {
-  if (argc == 1 && strcmp(argv[1], "-r")) {
+  if (argc == 2 && strcmp(argv[1], "-r") == 0) {
     coil_rotation(PI/2.0);
   }
   coil_radius(.25);
@@ -176,7 +176,7 @@ int main (int argc, char **argv) {
 	cout << "Radius not understood" << endl;
     }
     else if (strcmp(input, "cell") == 0) {
-      cell_calculation(1);
+      cell_calculations(1);
     }
     else if (strcmp(input, "start") == 0) {
       cout << "Ok: start" << endl;
