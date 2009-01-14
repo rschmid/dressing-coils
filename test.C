@@ -137,7 +137,24 @@ int parse_segmented_arc(BCylinder **coil_array) {
 }
 
 int cell_calculations(int set = 0) {
-
+  static int points[3];
+  static float clow[3], chigh[3], cdelta[3];
+  if (set) {
+    if (!(cin >> points[0] >> points[2] >> points[3])) {
+      cout << "format: points low_coords high_coords" << endl;
+      points[0] = points[1] = points[2] = 0;
+      return 0;
+    }
+    if (cin >> clow[0] >> clow[1] >> clow[2] &&
+	cin >> chigh[0] >> chigh[1] >> chigh[2]) {
+      
+    }
+    else {
+      cout << "cell coordinates not understood" << endl;
+      return 0;
+    }
+  }
+  return 1;
 }
 
 int main (int argc, char **argv) {
